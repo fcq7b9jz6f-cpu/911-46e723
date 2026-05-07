@@ -1,2 +1,99 @@
-# 911-46e723
-Built with Webly
+# متجر الكتروني لسيارات بورش 911
+
+موقع تم بناؤه بواسطة Webly.
+
+## ذاكرة المشروع
+
+هذا الملف يستخدمه Webly كذاكرة طويلة الأمد للمشروع. لا تحذفه.
+
+### الملفات
+- `src/components/ui/hover-card.tsx`
+- `src/components/ui/input-otp.tsx`
+- `src/components/ui/input.tsx`
+- `src/components/ui/label.tsx`
+- `src/components/ui/menubar.tsx`
+- `src/components/ui/skeleton.tsx`
+- `src/components/ui/table.tsx`
+- `src/hooks/use-mobile.tsx`
+- `src/lib/error-capture.ts`
+- `src/lib/error-page.ts`
+- `src/lib/utils.ts`
+- `src/components/ui/slider.tsx`
+- `.gitignore`
+- `.lovable/project.json`
+- `.prettierignore`
+- `.prettierrc`
+- `components.json`
+- `eslint.config.js`
+- `src/components/ui/accordion.tsx`
+- `src/components/ui/sonner.tsx`
+- `src/components/ui/alert-dialog.tsx`
+- `src/components/ui/alert.tsx`
+- `src/components/ui/aspect-ratio.tsx`
+- `src/components/ui/avatar.tsx`
+- `src/components/ui/badge.tsx`
+- `src/components/ui/breadcrumb.tsx`
+- `src/components/ui/button.tsx`
+- `src/components/ui/calendar.tsx`
+- `src/components/ui/card.tsx`
+- `src/components/ui/carousel.tsx`
+- `src/components/ui/chart.tsx`
+- `src/components/ui/checkbox.tsx`
+- `src/components/ui/collapsible.tsx`
+- `src/components/ui/command.tsx`
+- `src/components/ui/context-menu.tsx`
+- `src/components/ui/dialog.tsx`
+- `src/components/ui/drawer.tsx`
+- `src/components/ui/dropdown-menu.tsx`
+- `src/components/ui/form.tsx`
+- `src/components/ui/navigation-menu.tsx`
+- `src/components/ui/pagination.tsx`
+- `src/components/ui/popover.tsx`
+- `src/components/ui/progress.tsx`
+- `src/components/ui/radio-group.tsx`
+- `src/components/ui/switch.tsx`
+- `src/components/ui/resizable.tsx`
+- `src/components/ui/scroll-area.tsx`
+- `src/components/ui/select.tsx`
+- `src/components/ui/separator.tsx`
+- `src/components/ui/sidebar.tsx`
+- `src/components/ui/tabs.tsx`
+- `src/components/ui/textarea.tsx`
+- `src/components/ui/toggle-group.tsx`
+- `src/components/ui/toggle.tsx`
+- `src/components/ui/tooltip.tsx`
+- `src/routeTree.gen.ts`
+- `src/router.tsx`
+- `src/routes/index.tsx`
+- `src/server.ts`
+- `src/start.ts`
+- `src/components/site/Footer.tsx`
+- `tsconfig.json`
+- `vite.config.ts`
+- `wrangler.jsonc`
+- `src/components/site/Navbar.tsx`
+- `src/assets/.gitkeep`
+- `src/routes/__root.tsx`
+- `src/routes/signup.tsx`
+- `src/index.css`
+- `src/components/ui/sheet.tsx`
+- `src/styles.css`
+- `src/routes/models.tsx`
+- `package.json`
+- `src/routes/contact.tsx`
+- `src/routes/login.tsx`
+- `src/routes/about.tsx`
+- `src/routes/features.tsx`
+- `src/routes/inventory.tsx`
+- `src/routes/_authenticated/dashboard.tsx`
+- `src/App.tsx`
+- `src/routes/_authenticated.tsx`
+- `src/main.tsx`
+
+### النشر
+- البناء: ملفات HTML/JS ثابتة
+- المنصة: Cloudflare Pages
+- النطاق: `*.pages.dev`
+
+---
+_تم البناء بـ [Webly](https://webly.app)_
