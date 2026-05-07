@@ -1,146 +1,154 @@
+import { useState } from 'react';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { Button } from '@/components/ui/card'; // Fix incorrect import if needed, but normally use @/components/ui/button
-import { Button as ShButton } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Car, ShieldCheck, Trophy, Gauge, Lock, Mail, UserPlus, Info, CheckCircle2 } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
+import { Shield, Lock, ArrowLeft, Car, Chrome, Globe, Key, UserCheck } from "lucide-react";
 
 export const Route = createFileRoute('/login')({
   head: () => ({
-    title: 'تسجيل الدخول | انضم إلى نادي 911 Heritage',
-    meta: [
-      { name: 'description', content: 'سجل دخولك للوصول إلى العروض الحصرية، تتبع حجوزاتك، والحصول على دعوات لفعاليات بورش الخاصة.' },
-    ],
+    title: 'تسجيل الدخول | بورش السعودية',
+    meta: [{ name: 'description', content: 'سجل دخولك إلى حساب بورش للوصول إلى ميزات التخصيص الحصرية ومتابعة طلباتك.' }],
   }),
-  component: AuthPage,
+  component: LoginComponent,
 });
 
-function AuthPage() {
+function LoginComponent() {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      toast.success("تم تسجيل الدخول بنجاح");
+      navigate({ to: '/' });
+    }, 1500);
+  };
+
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
-      <div className="hidden lg:flex flex-col bg-zinc-950 p-12 text-white relative overflow-hidden">
+    <div className="min-h-screen flex flex-col md:flex-row bg-white relative overflow-hidden">
+      {/* Visual Side */}
+      <div className="hidden md:flex md:w-1/2 bg-black relative p-12 flex-col justify-between">
         <div className="absolute inset-0 opacity-40">
-           <img src="https://images.unsplash.com/photo-1611859266238-4b98091d9d9b?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="Porsche Interior" />
+            <img 
+                src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=2000" 
+                className="w-full h-full object-cover" 
+                alt="Porsche Dashboard"
+            />
         </div>
-        <div className="relative z-10 flex flex-col h-full">
-          <Link to="/" className="flex items-center gap-2 group mb-20">
-            <div className="bg-primary p-2 rounded-lg group-hover:rotate-12 transition-transform">
-              <Car className="h-8 w-8 text-primary-foreground" />
+        <div className="relative z-10">
+            <Link to="/" className="text-white flex items-center gap-2 group">
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-black uppercase italic tracking-tighter">العودة للرئيسية</span>
+            </Link>
+        </div>
+        <div className="relative z-10 max-w-lg">
+            <h2 className="text-6xl font-black italic uppercase text-white mb-6 leading-none tracking-tighter">
+                مرحباً بك <br /> <span className="text-red-600">من جديد</span>
+            </h2>
+            <p className="text-zinc-400 text-lg leading-relaxed">
+              سجل دخولك لتجربة عالم بورش المخصص. من هنا تبدأ رحلتك نحو امتلاك الأسطورة.
+            </p>
+        </div>
+        <div className="relative z-10 flex gap-8">
+            <div className="flex flex-col gap-1">
+                <span className="text-white font-black text-2xl italic tracking-tighter">30k+</span>
+                <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest">فوز في السباقات</span>
             </div>
-            <span className="text-4xl font-black tracking-tighter uppercase italic">911 Heritage</span>
-          </Link>
-          
-          <div className="mt-auto space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-6xl font-black italic uppercase tracking-tighter leading-none">أهلاً بك في <br /><span className="text-primary italic">عالم النخبة</span></h2>
-              <p className="text-xl text-gray-400 max-w-md leading-relaxed">بصفتك عضواً في Heritage، ستحصل على وصول مبكر لأندر إصدارات بورش 911 وخدمات صيانة مخصصة تناسب نمط حياتك.</p>
+            <div className="flex flex-col gap-1">
+                <span className="text-white font-black text-2xl italic tracking-tighter">1963</span>
+                <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest">تاريخ الانطلاق</span>
             </div>
-
-            <div className="grid grid-cols-2 gap-8 py-8 border-y border-white/10">
-              <div className="flex gap-4">
-                <div className="bg-primary/20 p-3 rounded-xl h-fit"><ShieldCheck className="h-6 w-6 text-primary" /></div>
-                <div><h4 className="font-bold italic">أمان تام</h4><p className="text-sm text-gray-500">حماية كاملة لبياناتك الشخصية ومعلومات ملكيتك.</p></div>
-              </div>
-              <div className="flex gap-4">
-                <div className="bg-primary/20 p-3 rounded-xl h-fit"><Trophy className="h-6 w-6 text-primary" /></div>
-                <div><h4 className="font-bold italic">نادي الملاك</h4><p className="text-sm text-gray-500">دخول حصري لتجمعات وعروض القيادة الدولية.</p></div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-6">
-              <div className="flex -space-x-4">
-                {[1,2,3,4].map(i => (
-                  <div key={i} className="h-12 w-12 rounded-full border-4 border-zinc-950 bg-zinc-800 overflow-hidden">
-                    <img src={`https://i.pravatar.cc/100?u=${i}`} alt="User" />
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-400 font-medium">انضم إلى أكثر من <span className="text-white font-bold tracking-tight">+500 مالك</span> في منطقتك.</p>
-            </div>
-          </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-center p-8 lg:p-12 bg-background">
-        <div className="w-full max-w-md space-y-8">
-          <div className="space-y-2 text-center lg:text-right">
-            <h1 className="text-3xl font-black italic uppercase tracking-tighter">مرحباً بك مجدداً</h1>
-            <p className="text-muted-foreground">أدخل بياناتك للمتابعة إلى حسابك الخاص.</p>
+      {/* Form Side */}
+      <div className="flex-1 flex items-center justify-center p-8 md:p-20">
+        <div className="w-full max-w-[440px]">
+          <div className="mb-12 text-center md:text-right">
+            <h1 className="text-4xl font-black italic uppercase tracking-tighter mb-4">تسجيل الدخول</h1>
+            <p className="text-zinc-500 uppercase text-xs font-black tracking-widest italic">ادخل بيانات حسابك للمتابعة</p>
           </div>
 
-          <Tabs defaultValue="login" className="w-full" dir="rtl">
-            <TabsList className="grid w-full grid-cols-2 h-14 p-1 bg-muted rounded-xl mb-8">
-              <TabsTrigger value="login" className="rounded-lg font-bold italic data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">تسجيل الدخول</TabsTrigger>
-              <TabsTrigger value="register" className="rounded-lg font-bold italic data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">عضوية جديدة</TabsTrigger>
-            </TabsList>
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                 البريد الإلكتروني <Mail className="w-3 h-3 text-red-600" />
+              </label>
+              <Input 
+                type="email" 
+                placeholder="name@example.com" 
+                className="rounded-none border-zinc-200 h-14 bg-zinc-50 focus:bg-white transition-all"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="text-xs font-black uppercase tracking-widest flex items-center gap-2">
+                   كلمة المرور <Lock className="w-3 h-3 text-red-600" />
+                </label>
+                <Link to="/" className="text-[10px] font-black uppercase tracking-widest text-red-600 hover:underline">نسيت كلمة المرور؟</Link>
+              </div>
+              <Input 
+                type="password" 
+                placeholder="••••••••" 
+                className="rounded-none border-zinc-200 h-14 bg-zinc-50 focus:bg-white transition-all"
+                required
+              />
+            </div>
 
-            <TabsContent value="login" className="space-y-6">
-              <div className="space-y-2 text-right">
-                <Label className="font-bold italic uppercase tracking-wider opacity-60">البريد الإلكتروني</Label>
-                <div className="relative">
-                  <Mail className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input type="email" placeholder="name@example.com" className="h-14 pr-12 rounded-xl border-none ring-1 ring-input focus:ring-2 focus:ring-primary bg-muted/30" />
-                </div>
-              </div>
-              <div className="space-y-2 text-right">
-                 <div className="flex justify-between">
-                  <Link to="/" className="text-sm text-primary hover:underline font-bold italic">نسيت كلمة المرور؟</Link>
-                  <Label className="font-bold italic uppercase tracking-wider opacity-60">كلمة المرور</Label>
-                </div>
-                <div className="relative">
-                  <Lock className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input type="password" placeholder="••••••••" className="h-14 pr-12 rounded-xl border-none ring-1 ring-input focus:ring-2 focus:ring-primary bg-muted/30" />
-                </div>
-              </div>
-              <ShButton className="w-full h-14 text-xl font-black italic rounded-xl shadow-xl shadow-primary/20">دخول الأعضاء</ShButton>
-            </TabsContent>
+            <Button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-black hover:bg-zinc-800 text-white font-black uppercase py-8 text-lg rounded-none shadow-xl tracking-widest italic h-16"
+            >
+              {loading ? "جاري التحميل..." : "تسجيل الدخول"}
+            </Button>
 
-            <TabsContent value="register" className="space-y-6 text-right">
-               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="font-bold italic opacity-60">الاسم الأول</Label>
-                  <Input placeholder="أحمد" className="h-14 rounded-xl border-none ring-1 ring-input bg-muted/30" />
-                </div>
-                <div className="space-y-2">
-                  <Label className="font-bold italic opacity-60">اسم العائلة</Label>
-                  <Input placeholder="المنصور" className="h-14 rounded-xl border-none ring-1 ring-input bg-muted/30" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label className="font-bold italic opacity-60">البريد الإلكتروني</Label>
-                <Input type="email" placeholder="example@911.com" className="h-14 rounded-xl border-none ring-1 ring-input bg-muted/30" />
-              </div>
-              <div className="space-y-2">
-                <Label className="font-bold italic opacity-60">كلمة المرور</Label>
-                <Input type="password" placeholder="••••••••" className="h-14 rounded-xl border-none ring-1 ring-input bg-muted/30" />
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-xl border border-primary/10">
-                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                <p className="text-xs font-medium text-muted-foreground leading-relaxed italic">بإنشاء حساب، أنت توافق على شروط عضوية Heritage وسياستنا في التعامل مع البيانات الحصرية.</p>
-              </div>
-              <ShButton className="w-full h-14 text-xl font-black italic rounded-xl bg-primary text-primary-foreground">تقديم طلب العضوية</ShButton>
-            </TabsContent>
-          </Tabs>
+            <div className="relative py-4 flex items-center justify-center">
+                <div className="absolute inset-x-0 h-px bg-zinc-100" />
+                <span className="relative z-10 px-4 bg-white text-[10px] font-black uppercase tracking-widest text-zinc-400 italic">أو استخدم</span>
+            </div>
 
-          <section className="pt-8 border-t space-y-4">
-             <h4 className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground italic">مزايا العضوية</h4>
-             <div className="grid grid-cols-3 gap-2">
-                {[
-                  { icon: <Gauge className="h-4 w-4" />, label: "تتبع الحجز" },
-                  { icon: <Car className="h-4 w-4" />, label: "خدمة VIP" },
-                  { icon: <Info className="h-4 w-4" />, label: "نشرات تقنية" }
-                ].map((m, i) => (
-                  <div key={i} className="flex flex-col items-center gap-2 p-3 rounded-lg bg-muted/20 border border-border/50">
-                    <span className="text-primary">{m.icon}</span>
-                    <span className="text-[10px] font-bold italic">{m.label}</span>
-                  </div>
-                ))}
+            <div className="grid grid-cols-2 gap-4">
+                <Button variant="outline" className="rounded-none h-14 uppercase font-black text-xs gap-2 border-zinc-200">
+                    <Globe className="w-4 h-4" /> Google
+                </Button>
+                <Button variant="outline" className="rounded-none h-14 uppercase font-black text-xs gap-2 border-zinc-200">
+                    <Chrome className="w-4 h-4" /> Apple ID
+                </Button>
+            </div>
+          </form>
+
+          <div className="mt-12 pt-8 border-t border-zinc-100 text-center">
+             <p className="text-sm text-zinc-500 italic">
+                ليس لديك حساب؟ <Link to="/signup" className="text-red-600 font-black uppercase tracking-widest hover:underline ml-1">إنشاء حساب جديد</Link>
+             </p>
+          </div>
+
+          <div className="mt-20 grid grid-cols-3 gap-4 opacity-50">
+             <div className="flex flex-col items-center gap-2 text-center">
+                <Shield className="w-5 h-5" />
+                <span className="text-[8px] font-black uppercase tracking-tighter">أمان تام</span>
              </div>
-          </section>
+             <div className="flex flex-col items-center gap-2 text-center">
+                <UserCheck className="w-5 h-5" />
+                <span className="text-[8px] font-black uppercase tracking-tighter">دخول محمي</span>
+             </div>
+             <div className="flex flex-col items-center gap-2 text-center">
+                <Key className="w-5 h-5" />
+                <span className="text-[8px] font-black uppercase tracking-tighter">تشفير عالي</span>
+             </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+const Mail = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+);

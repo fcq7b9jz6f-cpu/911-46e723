@@ -71,7 +71,6 @@
 - `tsconfig.json`
 - `vite.config.ts`
 - `wrangler.jsonc`
-- `src/components/site/Navbar.tsx`
 - `src/assets/.gitkeep`
 - `src/routes/__root.tsx`
 - `src/routes/signup.tsx`
@@ -79,7 +78,6 @@
 - `src/components/ui/sheet.tsx`
 - `src/styles.css`
 - `src/routes/models.tsx`
-- `package.json`
 - `src/routes/contact.tsx`
 - `src/routes/login.tsx`
 - `src/routes/about.tsx`
@@ -89,6 +87,8 @@
 - `src/App.tsx`
 - `src/routes/_authenticated.tsx`
 - `src/main.tsx`
+- `package.json`
+- `src/components/site/Navbar.tsx`
 
 ### النشر
 - البناء: ملفات HTML/JS ثابتة

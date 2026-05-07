@@ -1,113 +1,107 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Phone, Mail, Clock, Headphones } from "lucide-react";
 
 export const Route = createFileRoute('/contact')({
   head: () => ({
-    title: 'تواصل معنا | 911 Heritage',
+    title: 'تواصل مع بورش | استفسارات المبيعات والخدمة',
     meta: [
-      { name: 'description', content: 'فريق خبراء بورش جاهز لمساعدتك. تواصل معنا للاستفسار عن الموديلات المتاحة أو طلب تجربة قيادة.' },
+      { name: 'description', content: 'نحن هنا للإجابة على جميع استفساراتك حول بورش 911. تواصل مع خبراء المبيعات أو احجز موعد صيانة.' },
     ],
   }),
-  component: ContactPage,
+  component: ContactComponent,
 });
 
-function ContactPage() {
+function ContactComponent() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Visual Header */}
-      <div className="h-[40vh] bg-zinc-950 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000')] bg-cover bg-center" />
-        <div className="relative text-center space-y-4">
-          <h1 className="text-5xl md:text-8xl font-black italic text-white uppercase tracking-tighter">تحدّث إلينا</h1>
-          <p className="text-gray-400 max-w-md mx-auto">نحن هنا لنقل شغفك بالسيارات الرياضية إلى أرض الواقع.</p>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 lg:px-8 -mt-20 relative z-20 pb-32">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Info Cards */}
-          <div className="lg:col-span-1 space-y-8">
-            <Card className="border-none shadow-2xl bg-zinc-900 text-white p-8">
-              <CardContent className="p-0 space-y-12">
-                <div className="space-y-6 text-right">
-                  <h3 className="text-3xl font-black italic uppercase tracking-tighter">معلومات المعرض</h3>
-                  <div className="space-y-8">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary/20 p-3 rounded-xl"><MapPin className="text-primary h-6 w-6" /></div>
-                      <div>
-                        <p className="font-bold text-lg italic">الموقع</p>
-                        <p className="text-gray-400">حي الملقا، طريق الأمير محمد بن سعد، الرياض، السعودية</p>
-                      </div>
+    <div className="pt-24 min-h-screen bg-zinc-50">
+      <div className="max-w-7xl mx-auto px-4 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+          <div>
+            <h1 className="text-6xl font-black italic uppercase tracking-tighter mb-8 leading-none">تواصل <br /> مع <span className="text-red-600 italic">الأسطورة</span></h1>
+            <p className="text-xl text-zinc-500 mb-12">فريقنا من الخبراء جاهز لمساعدتك في تخصيص سيارتك الحلم أو الرد على أي استفسارات تقنية.</p>
+            
+            <div className="space-y-8">
+                <div className="flex items-start gap-6">
+                    <div className="p-4 bg-white dark:bg-zinc-900 shadow-lg rounded-none rotate-3 group hover:rotate-0 transition-transform">
+                        <MapPin className="w-6 h-6 text-red-600" />
                     </div>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary/20 p-3 rounded-xl"><Phone className="text-primary h-6 w-6" /></div>
-                      <div>
-                        <p className="font-bold text-lg italic">الهاتف</p>
-                        <p className="text-gray-400">+966 500 000 000</p>
-                      </div>
+                    <div>
+                        <h4 className="font-black uppercase italic mb-1">المعرض الرئيسي</h4>
+                        <p className="text-zinc-500 text-sm">طريق الملك فهد، الرياض، المملكة العربية السعودية</p>
                     </div>
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary/20 p-3 rounded-xl"><Mail className="text-primary h-6 w-6" /></div>
-                      <div>
-                        <p className="font-bold text-lg italic">البريد الإلكتروني</p>
-                        <p className="text-gray-400">info@911heritage.sa</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-
-                <div className="pt-8 border-t border-white/10">
-                  <div className="flex items-center gap-4 text-gray-400">
-                    <Clock className="h-5 w-5" />
-                    <p>المعرض مفتوح يومياً من الساعة 9 صباحاً حتى 10 مساءً</p>
-                  </div>
+                <div className="flex items-start gap-6">
+                    <div className="p-4 bg-white dark:bg-zinc-900 shadow-lg rounded-none rotate-3 group hover:rotate-0 transition-transform">
+                        <Phone className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div>
+                        <h4 className="font-black uppercase italic mb-1">اتصل بنا</h4>
+                        <p className="text-zinc-500 text-sm">800-PORSCHE (767-7243)</p>
+                    </div>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex items-start gap-6">
+                    <div className="p-4 bg-white dark:bg-zinc-900 shadow-lg rounded-none rotate-3 group hover:rotate-0 transition-transform">
+                        <Mail className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div>
+                        <h4 className="font-black uppercase italic mb-1">البريد الإلكتروني</h4>
+                        <p className="text-zinc-500 text-sm">info@porsche-saudi.com</p>
+                    </div>
+                </div>
+                <div className="flex items-start gap-6">
+                    <div className="p-4 bg-white dark:bg-zinc-900 shadow-lg rounded-none rotate-3 group hover:rotate-0 transition-transform">
+                        <Clock className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div>
+                        <h4 className="font-black uppercase italic mb-1">ساعات العمل</h4>
+                        <p className="text-zinc-500 text-sm">الأحد - الخميس: 9:00 صباحاً - 9:00 مساءً</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-16 p-8 border-2 border-dashed border-zinc-200 text-center">
+                <Headphones className="w-10 h-10 mx-auto text-zinc-400 mb-4" />
+                <h5 className="font-bold uppercase mb-2">خدمة المساعدة على الطريق (24/7)</h5>
+                <p className="text-zinc-500 text-sm italic underline">+966 500 000 000</p>
+            </div>
           </div>
 
-          {/* Form */}
-          <div className="lg:col-span-2">
-            <Card className="border-none shadow-2xl p-10">
-              <CardContent className="p-0">
-                <form className="space-y-8" dir="rtl">
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-2 text-right">
-                      <label className="text-sm font-black uppercase tracking-widest italic opacity-60">الاسم الكامل</label>
-                      <Input placeholder="أدخل اسمك هنا..." className="h-14 rounded-xl text-lg px-6 bg-muted/50 focus:bg-background border-none ring-1 ring-input focus:ring-2 focus:ring-primary" />
+          <div className="bg-white p-12 shadow-2xl border-t-4 border-red-600">
+            <h3 className="text-3xl font-black italic uppercase mb-8">أرسل استفسارك</h3>
+            <form className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <Label htmlFor="first-name">الاسم الأول</Label>
+                        <Input id="first-name" placeholder="أحمد" className="rounded-none border-zinc-200" />
                     </div>
-                    <div className="space-y-2 text-right">
-                      <label className="text-sm font-black uppercase tracking-widest italic opacity-60">البريد الإلكتروني</label>
-                      <Input type="email" placeholder="example@911.com" className="h-14 rounded-xl text-lg px-6 bg-muted/50 focus:bg-background border-none ring-1 ring-input focus:ring-2 focus:ring-primary" />
+                    <div className="space-y-2">
+                        <Label htmlFor="last-name">اسم العائلة</Label>
+                        <Input id="last-name" placeholder="الغامدي" className="rounded-none border-zinc-200" />
                     </div>
-                  </div>
-                  
-                  <div className="space-y-2 text-right">
-                    <label className="text-sm font-black uppercase tracking-widest italic opacity-60">الموديل المهتم به</label>
-                    <select className="flex h-14 w-full rounded-xl border-none ring-1 ring-input focus:ring-2 focus:ring-primary bg-muted/50 px-6 py-2 text-lg appearance-none">
-                      <option>911 Carrera S</option>
-                      <option>911 GT3 RS</option>
-                      <option>911 Turbo S</option>
-                      <option>911 Dakar</option>
-                      <option>أخرى</option>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="email">البريد الإلكتروني</Label>
+                    <Input id="email" type="email" placeholder="example@gmail.com" className="rounded-none border-zinc-200" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="interest">الموديل المهتم به</Label>
+                    <select className="w-full bg-transparent border border-zinc-200 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-600">
+                        <option>911 Carrera</option>
+                        <option>911 Turbo S</option>
+                        <option>911 GT3 RS</option>
+                        <option>أخرى / استفسار عام</option>
                     </select>
-                  </div>
-
-                  <div className="space-y-2 text-right">
-                    <label className="text-sm font-black uppercase tracking-widest italic opacity-60">رسالتك</label>
-                    <Textarea placeholder="كيف يمكننا مساعدتك اليوم؟" className="min-h-[200px] rounded-xl text-lg p-6 bg-muted/50 focus:bg-background border-none ring-1 ring-input focus:ring-2 focus:ring-primary" />
-                  </div>
-
-                  <Button className="w-full h-16 text-xl font-black uppercase italic rounded-xl gap-3 shadow-xl shadow-primary/30">
-                    إرسال الطلب <Send className="h-6 w-6" />
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="message">رسالتك</Label>
+                    <Textarea id="message" placeholder="كيف يمكننا مساعدتك اليوم؟" className="rounded-none border-zinc-200 min-h-[150px]" />
+                </div>
+                <Button className="w-full bg-red-600 hover:bg-red-700 text-white font-black uppercase py-8 text-lg rounded-none shadow-xl shadow-red-600/20">إرسال الطلب</Button>
+            </form>
           </div>
         </div>
       </div>

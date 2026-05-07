@@ -1,105 +1,71 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Search, Filter, Info } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute('/models')({
   head: () => ({
-    title: 'موديلات بورش 911 | تسوق مجموعتنا الحصرية',
+    title: 'موديلات بورش 911 | اكتشف التنوع',
     meta: [
-      { name: 'description', content: 'استعرض جميع فئات بورش 911: كاريرا، تاركا، تيربو، و GT3. مواصفات تفصيلية وأسعار حصرية.' },
+      { name: 'description', content: 'قائمة كاملة بجميع فئات بورش 911 المتوفرة للبيع؛ كاريرا، تارجا، توربو، وجي تي 3.' },
     ],
   }),
-  component: ModelsPage,
+  component: ModelsComponent,
 });
 
-const MODELS = [
-  { id: 1, name: "911 Carrera", year: 2024, price: "$114,400", power: "379 hp", category: "Standard", img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format" },
-  { id: 2, name: "911 Targa 4", year: 2024, price: "$134,500", power: "379 hp", category: "Open Top", img: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format" },
-  { id: 3, name: "911 Turbo S", year: 2024, price: "$230,400", power: "640 hp", category: "Performance", img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format" },
-  { id: 4, name: "911 GT3 RS", year: 2024, price: "$241,300", power: "518 hp", category: "GT Models", img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format" },
-  { id: 5, name: "911 Dakar", year: 2024, price: "$222,000", power: "473 hp", category: "Special", img: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format" },
-  { id: 6, name: "911 Sport Classic", year: 2023, price: "$272,300", power: "543 hp", category: "Special", img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format" },
-];
+function ModelsComponent() {
+  const categories = [
+    { title: "Carrera", desc: "الأداء اليومي النقي", count: "8 موديلات" },
+    { title: "Targa", desc: "التصميم الكلاسيكي المتجدد", count: "3 موديلات" },
+    { title: "Turbo", desc: "القوة المطلقة بدون تنازلات", count: "2 موديلات" },
+    { title: "GT Series", desc: "للسباقات، ولكن مرخصة للطريق", count: "3 موديلات" }
+  ];
 
-function ModelsPage() {
+  const allModels = [
+    { name: "911 Carrera", base: "450k", hp: "385", img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600" },
+    { name: "911 Carrera S", base: "520k", hp: "450", img: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=600" },
+    { name: "911 Carrera GTS", base: "580k", hp: "480", img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=600" },
+    { name: "911 Turbo S", base: "890k", hp: "650", img: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=600" },
+    { name: "911 GT3 RS", base: "1.2M", hp: "525", img: "https://images.unsplash.com/photo-1611605698335-8b1569810432?q=80&w=600" },
+    { name: "911 Sport Classic", base: "1.5M", hp: "550", img: "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=600" }
+  ];
+
   return (
-    <div className="py-20 bg-background">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-7xl font-black italic tracking-tighter uppercase">الأسطول المتاح</h1>
-            <p className="text-muted-foreground text-lg max-w-xl">
-              تصفح التشكيلة الأوسع من سيارات بورش 911 الجديدة والمستعملة المعتمدة. كل موديل هو تحفة فنية هندسية.
-            </p>
-          </div>
-          <div className="flex gap-4">
-            <Button variant="outline" className="rounded-full gap-2">
-              <Filter className="h-4 w-4" /> تصفية
-            </Button>
-            <div className="relative group">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input 
-                type="text" 
-                placeholder="ابحث عن موديل..." 
-                className="pr-10 h-10 rounded-full border border-input bg-background px-4 focus:ring-2 focus:ring-primary outline-none transition-all w-64"
-              />
-            </div>
-          </div>
+    <div className="pt-24 min-h-screen bg-white">
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+            <h1 className="text-6xl font-black uppercase italic tracking-tighter mb-4">التشكيلة <span className="text-red-600">الكاملة</span></h1>
+            <p className="text-xl text-zinc-500 max-w-2xl mx-auto">اختر الشخصية التي تناسبك. كل سيارة 911 لها بريقها الخاص وهدفها المحدد.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {MODELS.map((car) => (
-            <Card key={car.id} className="group border-none shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <img 
-                  src={car.img} 
-                  alt={car.name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-primary/95 text-primary-foreground font-bold shadow-lg italic">
-                    {car.year}
-                  </Badge>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+            {categories.map((c, i) => (
+                <div key={i} className="bg-zinc-100 p-8 text-center hover:bg-red-600 hover:text-white transition-all cursor-pointer group">
+                    <h3 className="text-xl font-black uppercase italic mb-1">{c.title}</h3>
+                    <p className="text-xs text-zinc-500 group-hover:text-red-100 mb-4">{c.desc}</p>
+                    <span className="text-[10px] font-bold border px-2 py-1 uppercase">{c.count}</span>
                 </div>
-              </div>
-              <CardContent className="p-8">
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <h3 className="text-2xl font-black italic tracking-tighter uppercase">{car.name}</h3>
-                    <p className="text-muted-foreground font-medium uppercase text-xs tracking-widest mt-1 opacity-70">
-                      {car.category}
-                    </p>
-                  </div>
-                  <div className="text-left">
-                    <p className="text-primary font-bold text-xl">{car.price}</p>
-                    <p className="text-[10px] uppercase text-muted-foreground">قيمة بدئية</p>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="bg-muted p-3 rounded-xl">
-                    <p className="text-[10px] uppercase text-muted-foreground mb-1">القوة</p>
-                    <p className="font-bold flex items-center gap-2"><Info className="h-3 w-3 text-primary" /> {car.power}</p>
-                  </div>
-                  <div className="bg-muted p-3 rounded-xl">
-                    <p className="text-[10px] uppercase text-muted-foreground mb-1">الناقل</p>
-                    <p className="font-bold uppercase">PDK / Manual</p>
-                  </div>
-                </div>
+            ))}
+        </div>
 
-                <div className="flex gap-2">
-                  <Button className="flex-1 h-12 rounded-xl text-lg font-bold italic group-hover:bg-primary transition-colors">
-                    احجز الآن
-                  </Button>
-                  <Button variant="outline" size="icon" className="h-12 w-12 rounded-xl">
-                    <Info className="h-5 w-5" />
-                  </Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {allModels.map((m, i) => (
+                <div key={i} className="group cursor-pointer">
+                    <div className="aspect-video bg-zinc-200 overflow-hidden mb-6 relative">
+                         <img src={m.img} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt={m.name} />
+                         <div className="absolute top-4 left-4">
+                            <Badge className="bg-black text-white rounded-none">{m.hp} HP</Badge>
+                         </div>
+                    </div>
+                    <div className="flex justify-between items-end border-b-2 border-zinc-100 pb-4 group-hover:border-red-600 transition-all">
+                        <div>
+                            <h3 className="text-2xl font-black uppercase italic">{m.name}</h3>
+                            <p className="text-xs text-zinc-400 font-bold uppercase tracking-widest mt-1 italic">تبدأ من {m.base} ريال</p>
+                        </div>
+                        <Button variant="ghost" className="rounded-none font-bold uppercase text-xs p-0 h-auto hover:bg-transparent hover:text-red-600">طلب عرض سعر</Button>
+                    </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+            ))}
         </div>
       </div>
     </div>
