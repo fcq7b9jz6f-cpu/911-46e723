@@ -1,86 +1,125 @@
-import { useState, useEffect } from "react";
-import { Link } from "@tanstack/react-router";
-import { Menu, X, Car, User, ShoppingBag } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from '@tanstack/react-router';
+import { Button } from '@/components/ui/button';
+import { Car, User, ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const links = [
-    { to: "/", label: "الرئيسية" },
-    { to: "/models", label: "الموديلات" },
-    { to: "/inventory", label: "المخزون" },
-    { to: "/features", label: "التقنيات" },
-    { to: "/about", label: "عن بورش" },
-    { to: "/contact", label: "اتصل بنا" },
+  const navLinks = [
+    { name: 'الرئيسية', path: '/' },
+    { name: 'الموديلات', path: '/models' },
+    { name: 'المخزون', path: '/inventory' },
+    { name: 'المميزات', path: '/features' },
+    { name: 'من نحن', path: '/about' },
+    { name: 'اتصل بنا', path: '/contact' },
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md border-b" : "bg-transparent"}`}>
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tighter uppercase italic">Porsche <span className="text-red-600">911</span></span>
+    <nav
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 flex items-center justify-between rtl',
+        isScrolled 
+          ? 'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-md py-3' 
+          : 'bg-transparent py-5'
+      )}
+      dir="rtl"
+    >
+      {/* Brand */}
+      <Link to="/" className="flex items-center gap-2 group">
+        <div className="w-10 h-10 bg-primary flex items-center justify-center rounded-sm transition-transform group-hover:rotate-12">
+          <Car className="text-white w-6 h-6" />
+        </div>
+        <span className={cn(
+          "text-2xl font-black tracking-tighter uppercase",
+          isScrolled ? "text-zinc-900 dark:text-white" : "text-white"
+        )}>
+          PORSCHE <span className="text-primary">911</span>
+        </span>
+      </Link>
+
+      {/* Desktop Links */}
+      <div className="hidden md:flex items-center gap-8">
+        {navLinks.map((link) => (
+          <Link
+            key={link.path}
+            to={link.path}
+            className={cn(
+              "text-sm font-bold uppercase tracking-widest transition-colors hover:text-primary",
+              isScrolled ? "text-zinc-700 dark:text-zinc-300" : "text-zinc-100"
+            )}
+            activeProps={{ className: "text-primary!" }}
+          >
+            {link.name}
+          </Link>
+        ))}
+      </div>
+
+      {/* Actions */}
+      <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 border-r border-zinc-500/30 pr-4 mr-4">
+          <Button variant="ghost" size="icon" className={isScrolled ? "" : "text-white"}>
+            <ShoppingCart className="w-5 h-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className={isScrolled ? "" : "text-white"} onClick={() => navigate({ to: '/login' })}>
+            <User className="w-5 h-5" />
+          </Button>
+        </div>
+        
+        <Link to="/inventory">
+          <Button className="hidden md:flex bg-primary hover:bg-primary/90 text-white font-bold rounded-none">
+            اطلب الآن
+          </Button>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
-          {links.map(l => (
-            <Link 
-              key={l.to} 
-              to={l.to} 
-              className="text-sm font-medium hover:text-red-600 transition-colors uppercase tracking-wider"
-              activeProps={{ className: "text-red-600" }}
-            >
-              {l.label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="hidden sm:flex">
-            <ShoppingBag className="w-5 h-5" />
-          </Button>
-          <Link to="/login" className="hidden sm:flex">
-            <Button variant="outline" className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all uppercase text-xs font-bold">
-              <User className="w-4 h-4 ml-2" />
-              حسابي
-            </Button>
-          </Link>
-          <button onClick={() => setOpen(!open)} className="md:hidden p-2">
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-        <Link to="/models" className="text-sm font-medium hover:text-primary transition-colors">الموديلات</Link>
-      <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">التقنيات</Link>
-      <Link to="/about" className="text-sm font-medium hover:text-primary transition-colors">عن بورش</Link>
-      <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">اتصل بنا</Link>
-      <Link to="/inventory" className="text-sm font-medium hover:text-primary transition-colors">المخزون</Link>
-    </nav>
+        {/* Mobile Toggle */}
+        <button 
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? (
+            <X className={isScrolled ? "text-black" : "text-white"} />
+          ) : (
+            <Menu className={isScrolled ? "text-black" : "text-white"} />
+          )}
+        </button>
+      </div>
 
       {/* Mobile Menu */}
-      {open && (
-        <div className="md:hidden bg-background border-b px-4 py-6 space-y-4 animate-in slide-in-from-top duration-300">
-          {links.map(l => (
-            <Link 
-              key={l.to} 
-              to={l.to} 
-              onClick={() => setOpen(false)}
-              className="block text-lg font-bold uppercase"
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 top-[72px] bg-white dark:bg-zinc-950 z-40 p-8 flex flex-col gap-6 md:hidden">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className="text-2xl font-bold border-b border-zinc-100 dark:border-zinc-800 pb-4"
+              onClick={() => setIsMobileMenuOpen(false)}
             >
-              {l.label}
+              {link.name}
             </Link>
           ))}
-          <Link to="/login" onClick={() => setOpen(false)} className="block pt-4 border-t">
-            <Button className="w-full bg-red-600 hover:bg-red-700">تجسيل الدخول</Button>
-          </Link>
+          <Button size="lg" className="w-full mt-4 bg-primary text-white" onClick={() => { setIsMobileMenuOpen(false); navigate({ to: '/login' }); }}>
+            حسابي
+          </Button>
         </div>
       )}
-    </header>
+      <Link to="/models" className="text-sm font-medium hover:text-primary transition-colors">الموديلات</Link>
+    </nav>
   );
 }

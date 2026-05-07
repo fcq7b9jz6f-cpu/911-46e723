@@ -89,6 +89,7 @@
 - `src/main.tsx`
 - `package.json`
 - `src/components/site/Navbar.tsx`
+- `src/App.jsx`
 
 ### النشر
 - البناء: ملفات HTML/JS ثابتة

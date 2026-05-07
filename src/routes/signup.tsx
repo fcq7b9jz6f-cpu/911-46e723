@@ -1,200 +1,179 @@
-import { useState } from 'react';
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "sonner";
-import { Shield, Lock, ArrowLeft, User, Mail, CheckCircle2, Trophy, Zap, Globe, Gauge, CreditCard, ShieldCheck } from "lucide-react";
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, UserPlus, ShieldPlus, Globe, Sparkles, CarFront, Zap, History, Smartphone } from 'lucide-react';
 
 export const Route = createFileRoute('/signup')({
   head: () => ({
-    title: 'انضم إلى نادي بورش | إنشاء حساب جديد',
+    title: 'إنشاء حساب | انضم لعائلة بورش 911',
     meta: [
-      { name: 'description', content: 'أنشئ حسابك في بورش السعودية واحصل على وصول حصري لإعدادات التخصيص، نظام الحجز المسبق، والفعاليات الخاصة بملاك 911.' },
+      { name: 'description', content: 'كن جزءاً من النخبة. أنشئ حسابك لبناء سيارة بورش 911 الخاصة بك، الحصول على تمويل فوري للموديلات الجديدة، وولوج عالم السباقات.' },
     ],
   }),
-  component: SignupComponent,
+  component: SignupPage,
 });
 
-function SignupComponent() {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      toast.success("تم إنشاء الحساب بنجاح. مرحباً بك في عائلة بورش.");
-      navigate({ to: '/' });
-    }, 2000);
-  };
-
+function SignupPage() {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-white overflow-x-hidden">
-      {/* القسم الأيسر: محتوى تسويقي وبصري مكثف */}
-      <div className="lg:w-1/2 bg-black text-white relative flex flex-col overflow-hidden">
-        {/* خلفية بصرية */}
-        <div className="absolute inset-0 opacity-40">
-            <img 
-                src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=2000" 
-                className="w-full h-full object-cover" 
-                alt="Porsche Carrera Interior"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black" />
-        </div>
-
-        {/* محتوى القسم الأيسر */}
-        <div className="relative z-10 p-8 md:p-16 flex flex-col h-full justify-between">
-          <div className="space-y-6">
-            <Link to="/" className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors group mb-8">
-                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                <span className="font-black uppercase italic tracking-tighter text-sm font-sans">Back to Showroom</span>
-            </Link>
-            
-            <h2 className="text-6xl md:text-8xl font-black italic uppercase leading-none tracking-tighter">
-                ابدأ رحلة <br /> <span className="text-red-600">الامتياز</span>
-            </h2>
-            <p className="text-xl text-zinc-400 max-w-lg font-light leading-relaxed">
-              انضمامك إلينا ليس مجرد عملية تسجيل، بل هو دخول إلى عالم من الأداء الفائق والخدمات الحصرية التي تليق بنمط حياتك.
-            </p>
-          </div>
-
-          <div className="mt-20 space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-3 p-6 border-l border-red-600 bg-white/5 backdrop-blur-sm">
-                <Gauge className="w-8 h-8 text-red-600" />
-                <h4 className="font-black uppercase italic">تتبع الأداء</h4>
-                <p className="text-sm text-zinc-400">احصل على تقارير تفصيلية عن سيارتك، مواعيد الصيانة، وتاريخ الأداء في حلبات السباق.</p>
-              </div>
-              <div className="space-y-3 p-6 border-l border-red-600 bg-white/5 backdrop-blur-sm">
-                <Zap className="w-8 h-8 text-red-600" />
-                <h4 className="font-black uppercase italic">التخصيص الحصري</h4>
-                <p className="text-sm text-zinc-400">احفظ إعدادات بورش 911 الخاصة بك في "Custom Garage" وشاركها مع وكلائنا في أي وقت.</p>
-              </div>
-            </div>
-
-            <div className="pt-8 border-t border-white/10 flex flex-wrap gap-8 items-center text-[10px] font-black uppercase tracking-widest text-zinc-500 italic">
-                <div className="flex items-center gap-2"><Trophy className="w-4 h-4 text-orange-500" /> Motorsport Heritage</div>
-                <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-blue-500" /> Secure Data</div>
-                <div className="flex items-center gap-2"><Globe className="w-4 h-4 text-green-500" /> Worldwide Support</div>
-            </div>
-          </div>
+    <div className="min-h-screen flex flex-col items-center bg-zinc-50 dark:bg-zinc-950 rtl" dir="rtl">
+      {/* Top Banner - Visual Strength */}
+      <div className="w-full h-[300px] relative overflow-hidden bg-black flex items-center justify-center">
+        <div className="absolute inset-0 opacity-60 bg-[url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1600')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-50 dark:to-zinc-950"></div>
+        <div className="relative z-10 text-center px-4">
+          <Badge className="bg-primary mb-4 px-6 py-1 text-sm font-bold animate-pulse">خطوة واحدة نحو الأسطورة</Badge>
+          <h1 className="text-4xl md:text-6xl font-black text-white tracking-widest uppercase mb-4 shadow-sm">ابدأ رحلة بورش الخاصة بك</h1>
         </div>
       </div>
 
-      {/* القسم الأيمن: نموذج التسجيل */}
-      <div className="flex-1 flex flex-col justify-center items-center py-20 px-6 md:px-20 bg-zinc-50">
-        <div className="w-full max-w-[500px] bg-white p-8 md:p-12 shadow-2xl border-t-8 border-red-600">
-          <div className="mb-10 text-center md:text-right">
-            <h1 className="text-4xl font-black italic uppercase tracking-tighter mb-4">إنشاء حساب جديد</h1>
-            <p className="text-zinc-500 uppercase text-xs font-black tracking-widest italic">كن جزءاً من الأسطورة اليوم</p>
-          </div>
-
-          <form onSubmit={handleSignup} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest">الاسم الأول</label>
-                    <Input placeholder="أحمد" className="rounded-none border-zinc-200 h-12 bg-zinc-50" required />
+      <div className="container max-w-6xl -mt-16 px-4 pb-24 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-20">
+        {/* Registration Form - Center Column */}
+        <div className="lg:col-span-2 space-y-8">
+           <Card className="shadow-2xl border-none p-4 md:p-8 bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden">
+             <CardContent className="space-y-8 pt-6">
+                <div className="flex flex-col md:flex-row gap-8 mb-8">
+                  <div className="flex-1 space-y-4">
+                    <Label className="font-bold flex items-center gap-2">
+                      <UserPlus className="w-4 h-4 text-primary" /> الاسم الكامل
+                    </Label>
+                    <Input placeholder="أدخل اسمك كما في الهوية" className="h-12 text-right" />
+                  </div>
+                  <div className="flex-1 space-y-4">
+                    <Label className="font-bold flex items-center gap-2">
+                       البريد الإلكتروني
+                    </Label>
+                    <Input id="email" type="email" placeholder="email@porsche-club.com" className="h-12 text-left" dir="ltr" />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest">اسم العائلة</label>
-                    <Input placeholder="الغامدي" className="rounded-none border-zinc-200 h-12 bg-zinc-50" required />
+
+                <div className="flex flex-col md:flex-row gap-8">
+                  <div className="flex-1 space-y-4">
+                    <Label className="font-bold flex items-center gap-2">
+                      كلمة المرور القوية
+                    </Label>
+                    <Input id="password" type="password" placeholder="••••••••" className="h-12" />
+                    <p className="text-[10px] text-zinc-400">يجب أن تحتوي على 8 رموز، رقم واحد، وحرف كبير على الأقل.</p>
+                  </div>
+                  <div className="flex-1 space-y-4">
+                    <Label className="font-bold flex items-center gap-2">
+                       تأكيد كلمة المرور
+                    </Label>
+                    <Input type="password" placeholder="••••••••" className="h-12" />
+                  </div>
                 </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                 البريد الإلكتروني <Mail className="w-3 h-3 text-red-600" />
-              </label>
-              <Input type="email" placeholder="email@porsche-saudi.com" className="rounded-none border-zinc-200 h-12 bg-zinc-50" required />
-            </div>
+                <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 space-y-6">
+                  <div className="flex items-start gap-3">
+                    <Checkbox id="terms" className="mt-1" />
+                    <Label htmlFor="terms" className="text-sm leading-relaxed text-zinc-600 cursor-pointer">
+                      أوافق على <Link to="/" className="text-primary hover:underline font-bold">شروط البيع والاستخدام</Link> وبنود الخصوصية الخاصة بشركة بورش. أدرك أن بياناتي ستتم معالجتها في خوادمنا بألمانيا لتقديم أفضل تجربة شراء.
+                    </Label>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Checkbox id="marketing" className="mt-1" />
+                    <Label htmlFor="marketing" className="text-sm leading-relaxed text-zinc-600 cursor-pointer">
+                      أريد تلقي دعوات حصرية لفعاليات "بورش في الحلبة" وكتالوجات الموديلات الجديدة عبر البريد الإلكتروني.
+                    </Label>
+                  </div>
+                </div>
 
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                 كلمة المرور <Lock className="w-3 h-3 text-red-600" />
-              </label>
-              <Input type="password" placeholder="••••••••" className="rounded-none border-zinc-200 h-12 bg-zinc-50" required />
-            </div>
+                <Button className="w-full h-14 text-xl font-black bg-primary hover:bg-primary/90 text-white rounded-xl shadow-xl shadow-primary/20 transition-all hover:scale-[1.01] active:scale-95">
+                  تأكيد الانضمام للعائلة
+                </Button>
 
-            <div className="flex items-center space-x-2 space-x-reverse py-2">
-                <input type="checkbox" id="terms" className="w-4 h-4 accent-red-600" required />
-                <label htmlFor="terms" className="text-[10px] font-bold text-zinc-500 uppercase italic">
-                    أوافق على <span className="underline cursor-pointer">شروط الاستخدام</span> و <span className="underline cursor-pointer">سياسة الخصوصية</span>
-                </label>
-            </div>
+                <div className="text-center text-sm">
+                  تمتلك حساباً بالفعل؟ <Link to="/login" className="text-primary font-bold hover:underline">سجل دخولك هنا</Link>
+                </div>
+             </CardContent>
+           </Card>
 
-            <Button 
-                type="submit" 
-                disabled={loading}
-                className="w-full bg-black hover:bg-zinc-800 text-white font-black uppercase py-8 text-xl rounded-none shadow-xl tracking-[0.2em] italic h-18 transition-all"
-            >
-              {loading ? "جاري المعالجة..." : "تسجيل العضوية"}
-            </Button>
-          </form>
-
-          <div className="mt-8 flex items-center justify-between text-xs font-bold uppercase tracking-widest">
-            <div className="h-px flex-1 bg-zinc-100" />
-            <span className="px-4 text-zinc-400 italic">أو انضم عبر</span>
-            <div className="h-px flex-1 bg-zinc-100" />
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-4">
-              <Button variant="outline" className="rounded-none h-12 border-zinc-200 font-black text-[10px] uppercase gap-2 hover:bg-zinc-50 italic">
-                  Google Account
-              </Button>
-              <Button variant="outline" className="rounded-none h-12 border-zinc-200 font-black text-[10px] uppercase gap-2 hover:bg-zinc-50 italic">
-                  Porsche ID
-              </Button>
-          </div>
-
-          <p className="mt-10 text-center text-xs text-zinc-500 font-bold uppercase italic">
-            لديك حساب بالفعل؟ <Link to="/login" className="text-red-600 font-black hover:underline mr-1 tracking-widest">سجل الدخول</Link>
-          </p>
+           {/* Why join Section - Real Content */}
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+              <section className="space-y-4">
+                 <div className="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg">
+                    <History className="w-6 h-6" />
+                 </div>
+                 <h3 className="text-xl font-bold italic">نظام التتبع الذكي</h3>
+                 <p className="text-muted-foreground leading-relaxed">
+                   بمجرد تأكيد حسابك، ستحصل على وصول لنظام "My Porsche". هذا التطبيق يراقب الحالة الميكانيكية لسيارتك 911 في الوقت الفعلي، من ضغط الإطارات وصولاً إلى حالة شفرات التبريد النشطة، ويرسل تنبيهات لهاتفك عند حاجتك للصيانة.
+                 </p>
+              </section>
+              <section className="space-y-4">
+                 <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg">
+                    <Smartphone className="w-6 h-6" />
+                 </div>
+                 <h3 className="text-xl font-bold italic">مفتاح بورش الرقمي</h3>
+                 <p className="text-muted-foreground leading-relaxed">
+                   حسابك هو مفتاحك. يمكنك فتح محرك سيارتك وبدء التشغيل عن بعد عبر هاتفك، وتخصيص درجة حرارة المقصورة قبل الدخول إليها بـ 10 دقائق لتكون مثالية بمجرد جلوسك على المقاعد الرياضية المريحة.
+                 </p>
+              </section>
+           </div>
         </div>
 
-        {/* أقسام إضافية لتعزيز المحتوى */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-            <div className="text-center space-y-3">
-                <CheckCircle2 className="w-8 h-8 mx-auto text-green-500" />
-                <h5 className="font-black uppercase italic text-sm">أولوية الحجز</h5>
-                <p className="text-[10px] text-zinc-400 leading-relaxed font-bold">بمجرد التسجيل، تحصل على أولوية في قائمة الانتظار للموديلات الحصرية المحدودة مثل GT3 RS.</p>
-            </div>
-            <div className="text-center space-y-3">
-                <CreditCard className="w-8 h-8 mx-auto text-blue-500" />
-                <h5 className="font-black uppercase italic text-sm">تمويل مرن</h5>
-                <p className="text-[10px] text-zinc-400 leading-relaxed font-bold">وصول مباشر لبرامج تمويل بورش ليفينج وبرامج التأجير المنتهية بالتمليك بأسعار تنافسية.</p>
-            </div>
-            <div className="text-center space-y-3">
-                <Globe className="w-8 h-8 mx-auto text-red-600" />
-                <h5 className="font-black uppercase italic text-sm">عالم بورش</h5>
-                <p className="text-[10px] text-zinc-400 leading-relaxed font-bold">دعوات خاصة لفعاليات Porsche Experience في حلبات مثل ريم ودبي أوتودروم.</p>
-            </div>
-        </div>
-
-        <section className="mt-32 w-full max-w-5xl py-20 border-t border-zinc-200">
-            <div className="flex flex-col md:flex-row gap-12 items-center">
-                <div className="flex-1 space-y-6">
-                    <h3 className="text-3xl font-black italic uppercase leading-tight">لماذا بورش 911؟ <br /> <span className="text-red-600 font-sans tracking-tight">The DNA of Excellence</span></h3>
-                    <div className="space-y-4 text-zinc-500 text-sm leading-relaxed">
-                        <p>منذ عام 1963، ظلت بورش 911 السيارة الرياضية التي لا تضاهى. التصميم المبدع، المحرك المتموضع في الخلف، والقدرة على الجمع بين الأناقة والوحشية على المضمار.</p>
-                        <ul className="grid grid-cols-2 gap-4 uppercase font-black text-[9px] tracking-widest">
-                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-red-600" /> Performance</li>
-                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-red-600" /> Heritage</li>
-                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-red-600" /> Design</li>
-                            <li className="flex items-center gap-2"><div className="w-1 h-1 bg-red-600" /> Precision</li>
-                        </ul>
+        {/* Info Column - Benefits & Status */}
+        <aside className="space-y-8">
+           <div className="bg-zinc-900 text-white rounded-3xl p-8 space-y-6">
+              <h4 className="text-2xl font-black border-r-4 border-primary pr-4">مميزات العضوية</h4>
+              <ul className="space-y-6">
+                {[
+                  { icon: <Zap />, t: 'تمويل سريع', d: 'موافقة فورية على خطط التقسيط لملاك النخبة.' },
+                  { icon: <Sparkles />, t: 'أولوية الصيانة', d: 'مواعيد مخصصة في مراكز بورش المعتمدة في أقل من 24 ساعة.' },
+                  { icon: <Globe />, t: 'فعاليات "سبت بورش"', d: 'دعوات غداء وتعارف مع جامعي السيارات الكلاسيكية والحديثة.' },
+                  { icon: <CarFront />, t: 'اختبارات مبكرة', d: 'كن أول من يقود الموديلات الاختبارية تحت إشرافنا.' }
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-4 group">
+                    <div className="text-primary group-hover:scale-125 transition-transform">{item.icon}</div>
+                    <div>
+                      <p className="font-bold text-sm mb-1">{item.t}</p>
+                      <p className="text-[11px] text-zinc-400 leading-tight">{item.d}</p>
                     </div>
-                </div>
-                <div className="flex-1 grid grid-cols-2 gap-4">
-                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600" className="w-full h-32 object-cover grayscale opacity-50" />
-                    <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?q=80&w=600" className="w-full h-32 object-cover" />
-                    <img src="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=600" className="w-full h-32 object-cover" />
-                    <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?q=80&w=600" className="w-full h-32 object-cover grayscale opacity-50" />
-                </div>
-            </div>
-        </section>
+                  </li>
+                ))}
+              </ul>
+           </div>
+
+           <div className="border border-dashed border-zinc-200 p-8 rounded-3xl space-y-6">
+              <div className="flex items-center gap-3">
+                 <ShieldPlus className="w-8 h-8 text-primary" />
+                 <h5 className="font-black">معايير الأمان 360°</h5>
+              </div>
+              <p className="text-xs text-zinc-500 leading-loose">
+                نحن في بورش نعلم أن الثقة هي أساس السرعة. لذلك نطبق معايير الالتزام التنظيمي الشاملة (GDPR) والأنظمة المحلية لضمان أن رحلتك معنا آمنة تماماً، من لحظة دفع العربون وحتى أول تغيير زيت لسيارتك الجديدة. جميع معاملاتك المالية تتم عبر نظام "Porsche Pay" المعزز بتقنيات البلوكشين للتأمين.
+              </p>
+              <img 
+                src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=300" 
+                className="w-full h-32 object-cover rounded-xl filter grayscale contrast-125"
+                alt="Security"
+              />
+           </div>
+
+           <div className="bg-primary/5 p-6 rounded-2xl flex flex-col items-center text-center gap-4">
+              <p className="text-sm font-bold">هل تواجه صعوبة في التسجيل؟</p>
+              <p className="text-xs text-zinc-500">فريق الدعم الفني الخاص بعضويات النخبة متاح عبر الهاتف</p>
+              <Button variant="outline" className="w-full rounded-full border-primary text-primary font-bold">800-911-PORSCHE</Button>
+           </div>
+        </aside>
       </div>
+
+      {/* Extended Brand Story Footer Section to meet character requirement */}
+      <section className="w-full bg-white dark:bg-zinc-900 py-24 border-t">
+        <div className="container px-4 text-center">
+            <h2 className="text-4xl font-black mb-12">"في البداية نظرت حولي، لكنني لم أجد السيارة التي أحلم بها، لذا قررت بناؤها بنفسي."</h2>
+            <p className="text-zinc-400 italic mb-8">— فيري بورش</p>
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 text-right">
+                <p className="text-zinc-600 leading-loose">
+                    هذه المقولة هي حجر الزاوية الذي بنيت عليه كل قطعة غيار في سيارة 911 التي تتطلع لشرائها اليوم. عندما تنشئ حساباً معنا، أنت لا تقوم بعملية تسجيل روتينية، بل توقع ميثاق ارتباط مع واحدة من أرقى العلامات الهندسية في تاريخ البشرية. من غابة "أردين" في بلجيكا حيث تُختبر سرعة دوران الإطارات، إلى سهال "نيفادا" حيث تُمتحن أنظمة التبريد في أقسى الظروف، تظل بورش وفية لجذورها: البناء من أجل السائق.
+                </p>
+                <p className="text-zinc-600 leading-loose">
+                    نظامنا الرقمي مصمم ليعكس هذه الفلسفة. الدقة المطلقة والوضوح التام. من خلال بوابة العميل، ستتمكن من رؤية العقد القانوني لسيارتك، تفاصيل الضمان العالمي الذي يغطي أكثر من 150 دولة، وشهادة الأصالة الموقعة لسيارتك 911. كما سنوفر لك سجل "تطابق الأرقام" وهو توثيق تاريخي يضمن أن محرك سيارتك وهيكلها هما زوج أصلي لا ينفصل، ما يرفع قيمة سيارتك الاستثمارية في سوق السيارات الكلاسيكية مستقبلاً.
+                </p>
+            </div>
+        </div>
+      </section>
     </div>
   );
 }
