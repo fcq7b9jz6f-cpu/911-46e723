@@ -503,10 +503,10 @@
 
   function tryResolve(path) {
     if (FILES[path] !== undefined) return path;
-    for (const ext of ['.jsx', '.tsx', '.js', '.ts', '.css']) {
+    for (const ext of ['.tsx', '.ts', '.jsx', '.js', '.css']) {
       if (FILES[path + ext] !== undefined) return path + ext;
     }
-    for (const ext of ['.jsx', '.tsx', '.js', '.ts']) {
+    for (const ext of ['.tsx', '.ts', '.jsx', '.js']) {
       if (FILES[path + '/index' + ext] !== undefined) return path + '/index' + ext;
     }
     return null;
