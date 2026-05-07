@@ -789,11 +789,10 @@
   // CSS imports → JS module that injects a <style> tag and exports {}
   function sanitizeCss(cssText) {
     return String(cssText || '')
-      .replace(/@imports+["']tailwindcss["'];?/g, '')
-      .replace(/@plugins+["'][^"']+["'];?/g, '')
+      .replace(/@import\s+["']tailwindcss["'];?/g, '')
+      .replace(/@plugin\s+["'][^"']+["'];?/g, '')
       .replace(/@custom-variant[^;]+;?/g, '')
-      .replace(/@themes*{[sS]*?
-}/g, '')
+      .replace(/@theme\s*\{[\s\S]*?\n\}/g, '')
       .replace(/@apply[^;]+;?/g, '');
   }
 
