@@ -614,6 +614,42 @@
     }};
   }
 
+  // Auto-stub plugin: AI sometimes references components without importing them
+  // (e.g. <Toaster /> with no import). For any JSX element whose name isn't
+  // defined in any reachable scope, inject "const Name = () => null;" at the
+  // top of the file. Prevents "Toaster is not defined" runtime crashes.
+  function undefinedJsxComponentStubPlugin(babel) {
+    const t = babel.types;
+    return { visitor: {
+      Program: {
+        exit(progPath) {
+          const undefined_names = new Set();
+          progPath.traverse({
+            JSXOpeningElement(p) {
+              const n = p.node.name;
+              // Only handle simple <Name /> (not <obj.member /> or <ns:tag />)
+              if (!t.isJSXIdentifier(n)) return;
+              const name = n.name;
+              // lowercase = native html element, skip
+              if (!/^[A-Z]/.test(name)) return;
+              if (undefined_names.has(name)) return;
+              if (p.scope.hasBinding(name) || progPath.scope.hasBinding(name)) return;
+              undefined_names.add(name);
+            },
+          });
+          for (const name of undefined_names) {
+            progPath.node.body.unshift(
+              t.variableDeclaration('const', [t.variableDeclarator(
+                t.identifier(name),
+                t.arrowFunctionExpression([], t.nullLiteral()),
+              )]),
+            );
+          }
+        },
+      },
+    }};
+  }
+
   function localNamedImportFallbackPlugin(currentPath, helperName) {
     return function(babel) {
       const t = babel.types;
@@ -668,7 +704,7 @@
     const helperName = '__webly_pick_' + Math.random().toString(36).slice(2, 8);
     const transformed = Babel.transform(code, {
       presets,
-      plugins: [noDefaultExternalImportPlugin, safeReactRouterPlugin, localNamedImportFallbackPlugin(path, helperName)],
+      plugins: [noDefaultExternalImportPlugin, safeReactRouterPlugin, localNamedImportFallbackPlugin(path, helperName), undefinedJsxComponentStubPlugin],
       filename: path,
       sourceType: 'module',
     }).code;
