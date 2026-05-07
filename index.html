@@ -614,41 +614,7 @@
     }};
   }
 
-  // Auto-stub plugin: AI sometimes references components without importing them
-  // (e.g. <Toaster /> with no import). For any JSX element whose name isn't
-  // defined in any reachable scope, inject "const Name = () => null;" at the
-  // top of the file. Prevents "Toaster is not defined" runtime crashes.
-  function undefinedJsxComponentStubPlugin(babel) {
-    const t = babel.types;
-    return { visitor: {
-      Program: {
-        exit(progPath) {
-          const undefined_names = new Set();
-          progPath.traverse({
-            JSXOpeningElement(p) {
-              const n = p.node.name;
-              // Only handle simple <Name /> (not <obj.member /> or <ns:tag />)
-              if (!t.isJSXIdentifier(n)) return;
-              const name = n.name;
-              // lowercase = native html element, skip
-              if (!/^[A-Z]/.test(name)) return;
-              if (undefined_names.has(name)) return;
-              if (p.scope.hasBinding(name) || progPath.scope.hasBinding(name)) return;
-              undefined_names.add(name);
-            },
-          });
-          for (const name of undefined_names) {
-            progPath.node.body.unshift(
-              t.variableDeclaration('const', [t.variableDeclarator(
-                t.identifier(name),
-                t.arrowFunctionExpression([], t.nullLiteral()),
-              )]),
-            );
-          }
-        },
-      },
-    }};
-  }
+  // Note: undefined JSX components are auto-stubbed via stubUndefinedJsxComponents (regex pre-pass).
 
   function localNamedImportFallbackPlugin(currentPath, helperName) {
     return function(babel) {
@@ -698,13 +664,54 @@
     };
   }
 
+  function stubUndefinedJsxComponents(code) {
+    // Find <ComponentName ...> usages in raw source
+    const used = new Set();
+    const jsxRe = /<\s*([A-Z][A-Za-z0-9_]*)\b/g;
+    let m;
+    while ((m = jsxRe.exec(code)) !== null) used.add(m[1]);
+    if (!used.size) return code;
+    // Detect names already declared/imported in this file
+    const declared = new Set();
+    const importRe = /import\s+(?:([A-Z][A-Za-z0-9_]*)\s*(?:,\s*)?)?(?:\{([^}]+)\})?(?:\s*,\s*\*\s+as\s+([A-Z][A-Za-z0-9_]*))?(?:\s*\*\s+as\s+([A-Z][A-Za-z0-9_]*))?/g;
+    let im;
+    while ((im = importRe.exec(code)) !== null) {
+      if (im[1]) declared.add(im[1]);
+      if (im[3]) declared.add(im[3]);
+      if (im[4]) declared.add(im[4]);
+      if (im[2]) for (const part of im[2].split(',')) {
+        const name = part.trim().split(/\s+as\s+/).pop().trim();
+        if (/^[A-Za-z_$][\w$]*$/.test(name)) declared.add(name);
+      }
+    }
+    const declRe = /(?:^|\n)\s*(?:const|let|var|function|class)\s+([A-Z][A-Za-z0-9_]*)/g;
+    let dm;
+    while ((dm = declRe.exec(code)) !== null) declared.add(dm[1]);
+    const stubs = [];
+    for (const name of used) {
+      if (declared.has(name)) continue;
+      if (name === 'React' || name === 'Fragment') continue;
+      stubs.push('const ' + name + ' = (props) => (props && props.children) || null;');
+    }
+    if (!stubs.length) return code;
+    // Insert AFTER all top-level imports so we don't break them
+    const lines = code.split('\n');
+    let lastImport = -1;
+    for (let i = 0; i < lines.length; i++) {
+      if (/^\s*import\b/.test(lines[i])) lastImport = i;
+    }
+    lines.splice(lastImport + 1, 0, '/* webly: auto-stub undefined JSX components */', ...stubs);
+    return lines.join('\n');
+  }
+
   function transformJs(code, path) {
+    code = stubUndefinedJsxComponents(code);
     const presets = [['react', { runtime: 'automatic' }]];
     if (/\.tsx?$/.test(path)) presets.push(['typescript', { allExtensions: true, isTSX: true }]);
     const helperName = '__webly_pick_' + Math.random().toString(36).slice(2, 8);
     const transformed = Babel.transform(code, {
       presets,
-      plugins: [noDefaultExternalImportPlugin, safeReactRouterPlugin, localNamedImportFallbackPlugin(path, helperName), undefinedJsxComponentStubPlugin],
+      plugins: [noDefaultExternalImportPlugin, safeReactRouterPlugin, localNamedImportFallbackPlugin(path, helperName)],
       filename: path,
       sourceType: 'module',
     }).code;
