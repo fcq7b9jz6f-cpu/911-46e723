@@ -691,17 +691,11 @@
     for (const name of used) {
       if (declared.has(name)) continue;
       if (name === 'React' || name === 'Fragment') continue;
-      stubs.push('const ' + name + ' = (props) => (props && props.children) || null;');
+      // Use function declaration (hoisted) so it's safe to append at end of file
+      stubs.push('function ' + name + '(props){ return (props && props.children) || null; }');
     }
     if (!stubs.length) return code;
-    // Insert AFTER all top-level imports so we don't break them
-    const lines = code.split('\n');
-    let lastImport = -1;
-    for (let i = 0; i < lines.length; i++) {
-      if (/^\s*import\b/.test(lines[i])) lastImport = i;
-    }
-    lines.splice(lastImport + 1, 0, '/* webly: auto-stub undefined JSX components */', ...stubs);
-    return lines.join('\n');
+    return code + '\n/* webly: auto-stub undefined JSX components */\n' + stubs.join('\n') + '\n';
   }
 
   function transformJs(code, path) {
